@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-cognitive-planning/index" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.1.0">
+<title data-rh="true">Cognitive Planning - Translating Natural Language to ROS 2 Action Sequences | AI-Native Textbook</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://abdulqayyum4.github.io/AI-Humanoid-Book/img/logo.svg"><meta data-rh="true" name="twitter:image" content="https://abdulqayyum4.github.io/AI-Humanoid-Book/img/logo.svg"><meta data-rh="true" property="og:url" content="https://abdulqayyum4.github.io/AI-Humanoid-Book/docs/cognitive-planning/"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Cognitive Planning - Translating Natural Language to ROS 2 Action Sequences | AI-Native Textbook"><meta data-rh="true" name="description" content="Learn how cognitive planning systems translate natural language commands into executable ROS 2 action sequences for robotic execution"><meta data-rh="true" property="og:description" content="Learn how cognitive planning systems translate natural language commands into executable ROS 2 action sequences for robotic execution"><meta data-rh="true" name="keywords" content="vla,cognitive-planning,ros2,natural-language-processing,robotics,action-sequences,task-decomposition"><link data-rh="true" rel="icon" href="/AI-Humanoid-Book/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://abdulqayyum4.github.io/AI-Humanoid-Book/docs/cognitive-planning/"><link data-rh="true" rel="alternate" href="https://abdulqayyum4.github.io/AI-Humanoid-Book/docs/cognitive-planning/" hreflang="en"><link data-rh="true" rel="alternate" href="https://abdulqayyum4.github.io/AI-Humanoid-Book/docs/cognitive-planning/" hreflang="x-default"><link rel="stylesheet" href="/AI-Humanoid-Book/assets/css/styles.0d3dc5f1.css">
+<script src="/AI-Humanoid-Book/assets/js/runtime~main.53f57feb.js" defer="defer"></script>
+<script src="/AI-Humanoid-Book/assets/js/main.ff763fcb.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/AI-Humanoid-Book/"><div class="navbar__logo"><img src="/AI-Humanoid-Book/img/logo.svg" alt="AI Textbook Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/AI-Humanoid-Book/img/logo.svg" alt="AI Textbook Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">AI-Native Textbook</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/AI-Humanoid-Book/docs/llm-robot-convergence/">Docs</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/abdulqayyum4/AI-Humanoid-Book" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)" aria-live="polite"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" aria-expanded="false" href="/AI-Humanoid-Book/docs/llm-robot-convergence/">Module 1: LLM-Robot Convergence</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" aria-expanded="true" href="/AI-Humanoid-Book/docs/cognitive-planning/">Module 2: Cognitive Planning</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/AI-Humanoid-Book/docs/cognitive-planning/">Cognitive Planning</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" aria-expanded="false" href="/AI-Humanoid-Book/docs/vla-capstone/">Module 3: VLA Capstone</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" aria-expanded="false" href="/AI-Humanoid-Book/docs/vla-concepts-summary/">Module 4: VLA Concepts Summary</a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/AI-Humanoid-Book/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Module 2: Cognitive Planning</span><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">Cognitive Planning</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><h1>Cognitive Planning: Translating Natural Language to ROS 2 Action Sequences</h1>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="learning-objectives">Learning Objectives<a href="#learning-objectives" class="hash-link" aria-label="Direct link to Learning Objectives" title="Direct link to Learning Objectives">​</a></h2>
+<p>By the end of this chapter, you will be able to:</p>
+<ul>
+<li>Explain how natural language commands are translated to ROS 2 action sequences</li>
+<li>Describe the cognitive planning process for robotic action execution</li>
+<li>Identify the components that enable natural language processing and action sequencing</li>
+<li>Understand planning algorithms for robotic action sequences</li>
+<li>Explain integration with vision and navigation systems</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="introduction">Introduction<a href="#introduction" class="hash-link" aria-label="Direct link to Introduction" title="Direct link to Introduction">​</a></h2>
+<p>Cognitive planning represents the bridge between high-level human commands and the precise actions required for robotic execution. While the previous chapter explored how robots understand human language, this chapter focuses on how they plan and execute the necessary actions to fulfill those commands.</p>
+<p>In robotics, cognitive planning involves translating natural language commands into executable sequences of actions that a robot can perform. This process requires understanding not just what the user wants, but how to achieve it within the constraints of the robot&#x27;s capabilities and the environment.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="the-role-of-cognitive-planning">The Role of Cognitive Planning<a href="#the-role-of-cognitive-planning" class="hash-link" aria-label="Direct link to The Role of Cognitive Planning" title="Direct link to The Role of Cognitive Planning">​</a></h3>
+<p>Cognitive planning systems serve as the &quot;executive function&quot; of human-robot interaction. When a user says &quot;Go to the kitchen and bring me a glass of water,&quot; the cognitive planning system must:</p>
+<ol>
+<li>Decompose the high-level command into specific, executable actions</li>
+<li>Consider the robot&#x27;s current state and environment</li>
+<li>Plan a sequence of actions that safely achieves the goal</li>
+<li>Monitor execution and adapt to changes or obstacles</li>
+<li>Provide feedback to the user about progress</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="connection-to-ros-2">Connection to ROS 2<a href="#connection-to-ros-2" class="hash-link" aria-label="Direct link to Connection to ROS 2" title="Direct link to Connection to ROS 2">​</a></h3>
+<p>Robot Operating System 2 (ROS 2) provides the framework for executing these planned actions. ROS 2 action sequences allow for stateful, goal-oriented robot behaviors with feedback and result reporting. Cognitive planning systems generate these action sequences based on natural language commands.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="1-natural-language-command-interpretation">1. Natural Language Command Interpretation<a href="#1-natural-language-command-interpretation" class="hash-link" aria-label="Direct link to 1. Natural Language Command Interpretation" title="Direct link to 1. Natural Language Command Interpretation">​</a></h2>
+<p>The first step in cognitive planning is interpreting natural language commands to extract actionable information.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="11-command-decomposition">1.1 Command Decomposition<a href="#11-command-decomposition" class="hash-link" aria-label="Direct link to 1.1 Command Decomposition" title="Direct link to 1.1 Command Decomposition">​</a></h3>
+<p>Natural language commands often contain multiple objectives that must be broken down into sequential steps. For example, &quot;Go to the kitchen and bring me a glass of water&quot; decomposes into:</p>
+<ul>
+<li>Navigation task: Go to the kitchen</li>
+<li>Manipulation task: Find and pick up a glass</li>
+<li>Manipulation task: Fill the glass with water (if possible)</li>
+<li>Navigation task: Return to the user</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="12-intent-recognition-and-action-mapping">1.2 Intent Recognition and Action Mapping<a href="#12-intent-recognition-and-action-mapping" class="hash-link" aria-label="Direct link to 1.2 Intent Recognition and Action Mapping" title="Direct link to 1.2 Intent Recognition and Action Mapping">​</a></h3>
+<p>The cognitive planning system must map natural language intents to specific robot capabilities:</p>
+<p><strong>Navigation Intents</strong>: &quot;Go to,&quot; &quot;Move to,&quot; &quot;Navigate to&quot; → ROS 2 Navigation2D actions
+<strong>Manipulation Intents</strong>: &quot;Pick up,&quot; &quot;Grasp,&quot; &quot;Take&quot; → ROS 2 Manipulation actions
+<strong>Interaction Intents</strong>: &quot;Give,&quot; &quot;Hand over,&quot; &quot;Bring&quot; → Sequence of navigation and manipulation</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="13-constraint-recognition">1.3 Constraint Recognition<a href="#13-constraint-recognition" class="hash-link" aria-label="Direct link to 1.3 Constraint Recognition" title="Direct link to 1.3 Constraint Recognition">​</a></h3>
+<p>Cognitive planning systems must identify constraints within commands:</p>
+<ul>
+<li><strong>Safety constraints</strong>: Avoid obstacles, respect operational boundaries</li>
+<li><strong>Temporal constraints</strong>: Time limits or sequence requirements</li>
+<li><strong>Resource constraints</strong>: Available tools, energy, or capabilities</li>
+<li><strong>Environmental constraints</strong>: Physical limitations of the space</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="2-task-decomposition-and-planning">2. Task Decomposition and Planning<a href="#2-task-decomposition-and-planning" class="hash-link" aria-label="Direct link to 2. Task Decomposition and Planning" title="Direct link to 2. Task Decomposition and Planning">​</a></h2>
+<p>Once a command is interpreted, cognitive planning systems decompose it into executable tasks and plan their execution.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="21-hierarchical-task-networks">2.1 Hierarchical Task Networks<a href="#21-hierarchical-task-networks" class="hash-link" aria-label="Direct link to 2.1 Hierarchical Task Networks" title="Direct link to 2.1 Hierarchical Task Networks">​</a></h3>
+<p>Cognitive planning often uses hierarchical task networks (HTNs) to break down complex commands:</p>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">High-level goal: &quot;Get a glass of water&quot;</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">├── Sub-goal 1: Navigate to kitchen</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   ├── Action: Plan path to kitchen</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   ├── Action: Execute navigation</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   └── Action: Confirm arrival</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">├── Sub-goal 2: Locate glass</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   ├── Action: Activate vision system</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   ├── Action: Search for glass objects</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   └── Action: Identify graspable glass</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">├── Sub-goal 3: Grasp glass</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   ├── Action: Plan grasp trajectory</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   ├── Action: Execute grasp</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">│   └── Action: Verify grasp success</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">└── Sub-goal 4: Return to user</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    ├── Action: Plan path to user</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    ├── Action: Execute navigation</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    └── Action: Deliver glass</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="22-planning-algorithms">2.2 Planning Algorithms<a href="#22-planning-algorithms" class="hash-link" aria-label="Direct link to 2.2 Planning Algorithms" title="Direct link to 2.2 Planning Algorithms">​</a></h3>
+<p>Different planning algorithms serve different types of tasks:</p>
+<p><strong>Classical Planning</strong>: For deterministic environments with known actions and effects
+<strong>Temporal Planning</strong>: For tasks with timing constraints and concurrent actions
+<strong>Contingent Planning</strong>: For tasks with uncertain outcomes requiring conditional execution
+<strong>Reactive Planning</strong>: For tasks requiring immediate response to environmental changes</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="23-action-sequence-generation">2.3 Action Sequence Generation<a href="#23-action-sequence-generation" class="hash-link" aria-label="Direct link to 2.3 Action Sequence Generation" title="Direct link to 2.3 Action Sequence Generation">​</a></h3>
+<p>The planning process generates sequences of ROS 2 actions:</p>
+<p><strong>Navigation Actions</strong>:</p>
+<ul>
+<li><code>MoveToPose</code>: Navigate to a specific location</li>
+<li><code>FollowWaypoints</code>: Navigate through multiple locations</li>
+<li><code>CancelGoal</code>: Stop current navigation</li>
+</ul>
+<p><strong>Manipulation Actions</strong>:</p>
+<ul>
+<li><code>PickupObject</code>: Grasp and lift an object</li>
+<li><code>PlaceObject</code>: Release an object at a location</li>
+<li><code>MoveGroup</code>: Control robot arm joints</li>
+</ul>
+<p><strong>Perception Actions</strong>:</p>
+<ul>
+<li><code>FindObject</code>: Locate specific objects in the environment</li>
+<li><code>InspectObject</code>: Gather detailed information about an object</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="3-ros-2-action-sequences-for-beginners">3. ROS 2 Action Sequences for Beginners<a href="#3-ros-2-action-sequences-for-beginners" class="hash-link" aria-label="Direct link to 3. ROS 2 Action Sequences for Beginners" title="Direct link to 3. ROS 2 Action Sequences for Beginners">​</a></h2>
+<p>ROS 2 provides a robust framework for creating stateful, goal-oriented robot behaviors through its action system.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="31-understanding-ros-2-actions">3.1 Understanding ROS 2 Actions<a href="#31-understanding-ros-2-actions" class="hash-link" aria-label="Direct link to 3.1 Understanding ROS 2 Actions" title="Direct link to 3.1 Understanding ROS 2 Actions">​</a></h3>
+<p>ROS 2 actions differ from simple service calls because they:</p>
+<ul>
+<li>Support long-running operations with feedback</li>
+<li>Provide status updates during execution</li>
+<li>Allow for goal cancellation</li>
+<li>Return detailed results upon completion</li>
+</ul>
+<p>An action has three parts:</p>
+<ul>
+<li><strong>Goal</strong>: What you want the robot to do</li>
+<li><strong>Feedback</strong>: Progress updates during execution</li>
+<li><strong>Result</strong>: Final outcome when the action completes</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="32-action-types-for-cognitive-planning">3.2 Action Types for Cognitive Planning<a href="#32-action-types-for-cognitive-planning" class="hash-link" aria-label="Direct link to 3.2 Action Types for Cognitive Planning" title="Direct link to 3.2 Action Types for Cognitive Planning">​</a></h3>
+<p>Common action types used in cognitive planning:</p>
+<p><strong>Navigation Actions</strong> (<code>nav2_msgs</code>):</p>
+<ul>
+<li><code>NavigateToPose</code>: Navigate to a specific pose (position and orientation)</li>
+<li><code>FollowWaypoints</code>: Navigate through a sequence of waypoints</li>
+<li><code>ComputePathToPose</code>: Plan a path without executing it</li>
+</ul>
+<p><strong>Manipulation Actions</strong> (<code>moveit_msgs</code>, custom actions):</p>
+<ul>
+<li><code>Pickup</code>: Plan and execute a pick operation</li>
+<li><code>Place</code>: Plan and execute a place operation</li>
+<li><code>MoveGroup</code>: Plan and execute robot arm motion</li>
+</ul>
+<p><strong>Perception Actions</strong> (<code>object_finder_interfaces</code>):</p>
+<ul>
+<li><code>FindObject</code>: Search for objects of a specific type</li>
+<li><code>ClassifyObject</code>: Identify the type of an object</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="33-action-composition">3.3 Action Composition<a href="#33-action-composition" class="hash-link" aria-label="Direct link to 3.3 Action Composition" title="Direct link to 3.3 Action Composition">​</a></h3>
+<p>Cognitive planning systems compose multiple actions to achieve complex goals:</p>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">Complex Task: &quot;Fetch a red cup from the table&quot;</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">├── Perception Action: FindObject (type: cup, color: red)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">├── Navigation Action: NavigateToPose (near cup location)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">├── Manipulation Action: Pickup (target: identified cup)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">├── Navigation Action: NavigateToPose (return location)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">└── Manipulation Action: Place (location: delivery area)</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="4-integration-with-vision-and-navigation-systems">4. Integration with Vision and Navigation Systems<a href="#4-integration-with-vision-and-navigation-systems" class="hash-link" aria-label="Direct link to 4. Integration with Vision and Navigation Systems" title="Direct link to 4. Integration with Vision and Navigation Systems">​</a></h2>
+<p>Cognitive planning doesn&#x27;t work in isolation—it must coordinate with other robot systems.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="41-vision-system-integration">4.1 Vision System Integration<a href="#41-vision-system-integration" class="hash-link" aria-label="Direct link to 4.1 Vision System Integration" title="Direct link to 4.1 Vision System Integration">​</a></h3>
+<p>Vision systems provide critical information for cognitive planning:</p>
+<p><strong>Object Recognition</strong>: Identifying objects mentioned in commands (e.g., &quot;the red cup&quot;)
+<strong>Scene Understanding</strong>: Comprehending the spatial layout of the environment
+<strong>Pose Estimation</strong>: Determining where objects are located for manipulation
+<strong>Obstacle Detection</strong>: Identifying barriers that affect navigation planning</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="42-navigation-system-integration">4.2 Navigation System Integration<a href="#42-navigation-system-integration" class="hash-link" aria-label="Direct link to 4.2 Navigation System Integration" title="Direct link to 4.2 Navigation System Integration">​</a></h3>
+<p>Navigation systems execute the mobility aspects of cognitive plans:</p>
+<p><strong>Path Planning</strong>: Computing safe routes between locations
+<strong>Localization</strong>: Determining the robot&#x27;s current position
+<strong>Path Execution</strong>: Moving the robot along planned paths
+<strong>Replanning</strong>: Adjusting routes when obstacles appear or goals change</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="43-multi-system-coordination">4.3 Multi-System Coordination<a href="#43-multi-system-coordination" class="hash-link" aria-label="Direct link to 4.3 Multi-System Coordination" title="Direct link to 4.3 Multi-System Coordination">​</a></h3>
+<p>Effective cognitive planning requires tight coordination between systems:</p>
+<p><strong>Synchronization</strong>: Ensuring systems operate in the correct sequence
+<strong>Information Sharing</strong>: Passing relevant data between systems
+<strong>Error Handling</strong>: Managing failures in any subsystem
+<strong>State Management</strong>: Tracking the overall progress of complex tasks</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="5-reproducible-examples">5. Reproducible Examples<a href="#5-reproducible-examples" class="hash-link" aria-label="Direct link to 5. Reproducible Examples" title="Direct link to 5. Reproducible Examples">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="example-1-simple-navigation-command">Example 1: Simple Navigation Command<a href="#example-1-simple-navigation-command" class="hash-link" aria-label="Direct link to Example 1: Simple Navigation Command" title="Direct link to Example 1: Simple Navigation Command">​</a></h3>
+<p><strong>Goal</strong>: Translate &quot;Go to the table&quot; into a ROS 2 action sequence</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li>Natural language understanding identifies navigation intent</li>
+<li>System searches for &quot;table&quot; in environment map</li>
+<li>Path planner computes route to table location</li>
+<li>Navigation system executes <code>NavigateToPose</code> action</li>
+<li>System reports successful arrival</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="example-2-multi-step-manipulation">Example 2: Multi-Step Manipulation<a href="#example-2-multi-step-manipulation" class="hash-link" aria-label="Direct link to Example 2: Multi-Step Manipulation" title="Direct link to Example 2: Multi-Step Manipulation">​</a></h3>
+<p><strong>Goal</strong>: Process &quot;Pick up the blue pen and place it in the drawer&quot;</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li>Command decomposition: Navigation → Manipulation → Navigation → Manipulation</li>
+<li>Vision system locates blue pen</li>
+<li>Navigation system moves to pen location</li>
+<li>Manipulation system executes <code>Pickup</code> action</li>
+<li>Vision system locates drawer</li>
+<li>Navigation system moves to drawer location</li>
+<li>Manipulation system executes <code>Place</code> action</li>
+<li>Feedback provided at each step</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="example-3-complex-task-with-contingencies">Example 3: Complex Task with Contingencies<a href="#example-3-complex-task-with-contingencies" class="hash-link" aria-label="Direct link to Example 3: Complex Task with Contingencies" title="Direct link to Example 3: Complex Task with Contingencies">​</a></h3>
+<p><strong>Goal</strong>: Handle &quot;Get me a book from the shelf&quot; when the requested book isn&#x27;t available</p>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li>Natural language understanding identifies the goal</li>
+<li>Vision system searches for requested book</li>
+<li>If book not found, system identifies alternatives</li>
+<li>Navigation and manipulation systems retrieve available alternative</li>
+<li>System informs user of substitution</li>
+<li>Execution continues with alternative</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="key-ideas-summary">Key Ideas Summary<a href="#key-ideas-summary" class="hash-link" aria-label="Direct link to Key Ideas Summary" title="Direct link to Key Ideas Summary">​</a></h2>
+<ul>
+<li><strong>Cognitive Planning</strong>: The process of translating natural language commands into executable ROS 2 action sequences</li>
+<li><strong>Task Decomposition</strong>: Breaking complex commands into hierarchical sub-tasks that can be executed sequentially</li>
+<li><strong>ROS 2 Actions</strong>: Stateful, goal-oriented behaviors that support long-running operations with feedback</li>
+<li><strong>System Integration</strong>: Cognitive planning requires coordination between vision, navigation, and manipulation systems</li>
+<li><strong>Planning Algorithms</strong>: Different algorithms handle different types of tasks (classical, temporal, contingent, reactive)</li>
+<li><strong>Action Composition</strong>: Complex goals are achieved by composing multiple simple actions</li>
+<li><strong>Contingency Planning</strong>: Systems must handle unexpected situations and adapt plans accordingly</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="developer-checklist">Developer Checklist<a href="#developer-checklist" class="hash-link" aria-label="Direct link to Developer Checklist" title="Direct link to Developer Checklist">​</a></h2>
+<p>Use this checklist to verify your understanding of cognitive planning concepts:</p>
+<ul class="contains-task-list containsTaskList_mC6p">
+<li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Understand the role of cognitive planning in translating natural language to robot actions</li>
+<li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Can explain the process of command decomposition and task hierarchy</li>
+<li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Know the difference between ROS 2 actions and services</li>
+<li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Understand the three components of ROS 2 actions (goal, feedback, result)</li>
+<li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Can identify common action types used in cognitive planning</li>
+<li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Understand how cognitive planning integrates with vision and navigation systems</li>
+<li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Know how to compose multiple actions to achieve complex goals</li>
+<li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Can explain different planning algorithms and their use cases</li>
+<li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Understand contingency planning for handling unexpected situations</li>
+<li class="task-list-item"><input type="checkbox" disabled=""> <!-- -->Can describe the information flow between different robot systems in cognitive planning</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="practice-questions">Practice Questions<a href="#practice-questions" class="hash-link" aria-label="Direct link to Practice Questions" title="Direct link to Practice Questions">​</a></h2>
+<ol>
+<li>How does cognitive planning differ from simple command execution?</li>
+<li>What are the three components of a ROS 2 action?</li>
+<li>Explain how a complex command like &quot;Go to the kitchen and bring me a glass of water&quot; would be decomposed into action sequences.</li>
+<li>What role does the vision system play in cognitive planning?</li>
+<li>How do planning algorithms handle uncertainty in the environment?</li>
+<li>Describe the difference between classical planning and contingent planning.</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="validation-for-target-audience-ages-15-25">Validation for Target Audience (Ages 15-25)<a href="#validation-for-target-audience-ages-15-25" class="hash-link" aria-label="Direct link to Validation for Target Audience (Ages 15-25)" title="Direct link to Validation for Target Audience (Ages 15-25)">​</a></h2>
+<p>This chapter has been designed with the following considerations for the target audience:</p>
+<p><strong>Complexity Level</strong>: Concepts are explained using clear, accessible language without oversimplifying the technical content. Advanced terminology is defined when first introduced.</p>
+<p><strong>Educational Approach</strong>: The content builds from fundamental concepts to more complex applications, allowing learners to develop understanding progressively.</p>
+<p><strong>Practical Examples</strong>: Multiple reproducible examples demonstrate real-world applications of the concepts, helping students connect theory to practice.</p>
+<p><strong>Visual Aids</strong>: References to diagrams and visual representations help support different learning styles.</p>
+<p><strong>Interactive Elements</strong>: The developer checklist and practice questions encourage active engagement with the material.</p>
+<p><strong>Safety Awareness</strong>: Important safety considerations in robotics are highlighted throughout the content, preparing students for responsible development practices.</p>
+<p><strong>Technical Accuracy</strong>: All concepts are technically accurate while remaining accessible to the target age group.</p>
+<p><strong>Progressive Learning</strong>: The chapter structure allows students to understand basic cognitive planning before moving to more complex topics like multi-system coordination and contingency planning.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="next-steps">Next Steps<a href="#next-steps" class="hash-link" aria-label="Direct link to Next Steps" title="Direct link to Next Steps">​</a></h2>
+<p>Next, we&#x27;ll explore the complete VLA capstone integration, which brings together the LLM-robot convergence and cognitive planning concepts into a complete system that demonstrates the full potential of Vision-Language-Action systems.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="references">References<a href="#references" class="hash-link" aria-label="Direct link to References" title="Direct link to References">​</a></h2>
+<ul>
+<li>ROS 2 documentation and action tutorials</li>
+<li>Cognitive robotics research papers</li>
+<li>Planning algorithms in robotics literature</li>
+<li>Human-robot interaction studies</li>
+</ul></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="theme-doc-footer-edit-meta-row row"><div class="col"><a href="https://github.com/abdulqayyum4/AI-Humanoid-Book/edit/main/docs/docs/02-cognitive-planning/index.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_vwxv"></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/AI-Humanoid-Book/docs/llm-robot-convergence/"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">LLM-Robot Convergence</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/AI-Humanoid-Book/docs/vla-capstone/"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">VLA Capstone</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#learning-objectives" class="table-of-contents__link toc-highlight">Learning Objectives</a></li><li><a href="#introduction" class="table-of-contents__link toc-highlight">Introduction</a><ul><li><a href="#the-role-of-cognitive-planning" class="table-of-contents__link toc-highlight">The Role of Cognitive Planning</a></li><li><a href="#connection-to-ros-2" class="table-of-contents__link toc-highlight">Connection to ROS 2</a></li></ul></li><li><a href="#1-natural-language-command-interpretation" class="table-of-contents__link toc-highlight">1. Natural Language Command Interpretation</a><ul><li><a href="#11-command-decomposition" class="table-of-contents__link toc-highlight">1.1 Command Decomposition</a></li><li><a href="#12-intent-recognition-and-action-mapping" class="table-of-contents__link toc-highlight">1.2 Intent Recognition and Action Mapping</a></li><li><a href="#13-constraint-recognition" class="table-of-contents__link toc-highlight">1.3 Constraint Recognition</a></li></ul></li><li><a href="#2-task-decomposition-and-planning" class="table-of-contents__link toc-highlight">2. Task Decomposition and Planning</a><ul><li><a href="#21-hierarchical-task-networks" class="table-of-contents__link toc-highlight">2.1 Hierarchical Task Networks</a></li><li><a href="#22-planning-algorithms" class="table-of-contents__link toc-highlight">2.2 Planning Algorithms</a></li><li><a href="#23-action-sequence-generation" class="table-of-contents__link toc-highlight">2.3 Action Sequence Generation</a></li></ul></li><li><a href="#3-ros-2-action-sequences-for-beginners" class="table-of-contents__link toc-highlight">3. ROS 2 Action Sequences for Beginners</a><ul><li><a href="#31-understanding-ros-2-actions" class="table-of-contents__link toc-highlight">3.1 Understanding ROS 2 Actions</a></li><li><a href="#32-action-types-for-cognitive-planning" class="table-of-contents__link toc-highlight">3.2 Action Types for Cognitive Planning</a></li><li><a href="#33-action-composition" class="table-of-contents__link toc-highlight">3.3 Action Composition</a></li></ul></li><li><a href="#4-integration-with-vision-and-navigation-systems" class="table-of-contents__link toc-highlight">4. Integration with Vision and Navigation Systems</a><ul><li><a href="#41-vision-system-integration" class="table-of-contents__link toc-highlight">4.1 Vision System Integration</a></li><li><a href="#42-navigation-system-integration" class="table-of-contents__link toc-highlight">4.2 Navigation System Integration</a></li><li><a href="#43-multi-system-coordination" class="table-of-contents__link toc-highlight">4.3 Multi-System Coordination</a></li></ul></li><li><a href="#5-reproducible-examples" class="table-of-contents__link toc-highlight">5. Reproducible Examples</a><ul><li><a href="#example-1-simple-navigation-command" class="table-of-contents__link toc-highlight">Example 1: Simple Navigation Command</a></li><li><a href="#example-2-multi-step-manipulation" class="table-of-contents__link toc-highlight">Example 2: Multi-Step Manipulation</a></li><li><a href="#example-3-complex-task-with-contingencies" class="table-of-contents__link toc-highlight">Example 3: Complex Task with Contingencies</a></li></ul></li><li><a href="#key-ideas-summary" class="table-of-contents__link toc-highlight">Key Ideas Summary</a></li><li><a href="#developer-checklist" class="table-of-contents__link toc-highlight">Developer Checklist</a></li><li><a href="#practice-questions" class="table-of-contents__link toc-highlight">Practice Questions</a></li><li><a href="#validation-for-target-audience-ages-15-25" class="table-of-contents__link toc-highlight">Validation for Target Audience (Ages 15-25)</a></li><li><a href="#next-steps" class="table-of-contents__link toc-highlight">Next Steps</a></li><li><a href="#references" class="table-of-contents__link toc-highlight">References</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/AI-Humanoid-Book/docs">Documentation</a></li></ul></div><div class="col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://stackoverflow.com/questions/tagged/docusaurus" target="_blank" rel="noopener noreferrer" class="footer__link-item">Stack Overflow<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://discordapp.com/invite/docusaurus" target="_blank" rel="noopener noreferrer" class="footer__link-item">Discord<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://twitter.com/docusaurus" target="_blank" rel="noopener noreferrer" class="footer__link-item">Twitter<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/abdulqayyum4/AI-Humanoid-Book" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 AI-Native Textbook. Built with Docusaurus.</div></div></div></footer></div>
+</body>
+</html>
